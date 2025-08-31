@@ -3,6 +3,8 @@ package com.microservices.ecomerce.customer.application.controllers;
 import com.microservices.ecomerce.customer.domain.ports.inbound.CustomerService;
 import com.microservices.ecomerce.customer.application.dto.CustomerDto;
 import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ public class CustomerController {
 
 	@PostMapping
 	public ResponseEntity<CustomerDto> create(@Valid @RequestBody CustomerDto customerDto) {
-		return ResponseEntity.ok(customerService.save(customerDto));
+		return new ResponseEntity<>(customerService.save(customerDto), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{id}")
