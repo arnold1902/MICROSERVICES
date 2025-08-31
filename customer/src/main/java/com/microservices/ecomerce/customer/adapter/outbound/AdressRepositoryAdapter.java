@@ -3,8 +3,8 @@ package com.microservices.ecomerce.customer.adapter.outbound;
 import com.microservices.ecomerce.customer.domain.model.Adress;
 import com.microservices.ecomerce.customer.application.dto.AdressDto;
 import com.microservices.ecomerce.customer.infrastructure.mappers.AdressMapper;
+import com.microservices.ecomerce.customer.infrastructure.persistence.MongoAdressRepository;
 import com.microservices.ecomerce.customer.domain.ports.outbound.AdressRepository;
-import com.microservices.ecomerce.customer.adapter.persistence.MongoAdressRepository;
 import com.microservices.ecomerce.customer.infrastructure.exceptions.NotFoundException;
 import org.springframework.stereotype.Component;
 

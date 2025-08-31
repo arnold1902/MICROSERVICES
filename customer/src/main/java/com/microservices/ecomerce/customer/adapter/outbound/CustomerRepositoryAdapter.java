@@ -1,12 +1,12 @@
 package com.microservices.ecomerce.customer.adapter.outbound;
 
 import com.microservices.ecomerce.customer.domain.ports.outbound.CustomerRepository;
-import com.microservices.ecomerce.customer.adapter.persistence.MongoCustomerRepository;
 import com.microservices.ecomerce.customer.infrastructure.exceptions.NotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.microservices.ecomerce.customer.application.dto.CustomerDto;
 import com.microservices.ecomerce.customer.infrastructure.mappers.CustomerMapper;
+import com.microservices.ecomerce.customer.infrastructure.persistence.MongoCustomerRepository;
 
 import java.util.List;
 import java.util.Optional;

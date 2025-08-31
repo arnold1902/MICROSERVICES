@@ -1,4 +1,4 @@
-package com.microservices.ecomerce.customer.adapter.persistence;
+package com.microservices.ecomerce.customer.infrastructure.persistence;
 
 import com.microservices.ecomerce.customer.domain.model.Adress;
 import org.springframework.data.mongodb.repository.MongoRepository;
