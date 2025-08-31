@@ -15,4 +15,12 @@ Voici le flow normal :
 
 On commence un projet toujours par son infrastructure dans notre cas docker compose.
 
-Les microservices par lesquelles ont commence sont le config server et le discrovery service
+Les microservices par lesquelles ont commence sont le config server et le discrovery service car tout microservice metier auraa au moins besoin de recuperer sa configuration et s'emregistrer quelque part.
+
+Pour le config server:
+	- ajouter la dependance config server de spring cloud et ajouter l'annotation @EnableConfigServer dans la classe principale
+	- Ajouter les configurations dans l'application properties, definir le port et definir la localisation des configs des microservices de l'architecture
+	- Definir le profil actif de l'application sinon problème
+
+POur le discovery service:
+
