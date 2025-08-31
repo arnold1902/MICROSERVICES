@@ -1,42 +1,55 @@
+
 services:
   postgres:
+    # Service de base de données PostgreSQL
+    # 'container_name' : nom personnalisé du conteneur pour faciliter la gestion
     container_name: microservice_postgres
     image: postgres
+    # Variables d'environnement pour initialiser la base de données
     environment:
       POSTGRES_USER: arnold
       POSTGRES_PASSWORD: arnold_password
       PGDATA: /var/lib/postgresql/data
+    # Volume pour persister les données même si le conteneur est supprimé
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    # Le service est connecté au réseau défini plus bas
     networks:
       - microservice_network
+    # Redémarre le conteneur sauf si l'arrêt est manuel
     restart: unless-stopped
 
   pgadmin:
+    # Interface web pour gérer PostgreSQL
     container_name: microservice_pgadmin
     image: dpage/pgadmin4
+    # Identifiants pour se connecter à l'interface PGAdmin
     environment:
       PGADMIN_DEFAULT_EMAIL: afotsofone@gmail.com
       PGADMIN_DEFAULT_PASSWORD: arnold_password
     volumes:
       - pgadmin:/var/lib/pgadmin
+    # Mapping du port 80 du conteneur vers le port 5050 de la machine hôte
     ports:
       - "5050:80"
     networks:
       - microservice_network
     restart: unless-stopped
-# Dans PGAdmin tu vas utiliser comme hostname microservice_postgres car c'est le nom du service dans le fichier docker-compose.yml et ils sont dans le même réseau.
+    # Astuce : Dans PGAdmin, utiliser comme hostname 'microservice_postgres' pour se connecter à PostgreSQL car ils partagent le même réseau Docker.
 
   mongo:
+    # Service de base de données MongoDB
     container_name: microservice_mongo
     image: mongo
+    # Variables d'environnement pour initialiser MongoDB
     environment:
       MONGO_INITDB_ROOT_USERNAME: arnold
       MONGO_INITDB_ROOT_PASSWORD: arnold_password
     volumes:
       - mongo:/data/db
+    # Mapping du port 27017 du conteneur vers le port 27017 de la machine hôte
     ports:
       - "27017:27017"
     networks:
@@ -44,13 +57,16 @@ services:
     restart: unless-stopped
   
   mongo-express:
+    # Interface web pour gérer MongoDB
     container_name: microservice_mongo_express
     image: mongo-express
+    # Configuration pour se connecter au service MongoDB
     environment:
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: arnold
       ME_CONFIG_MONGODB_ADMINPASSWORD: arnold_password
+    # Mapping du port 8081 du conteneur vers le port 8081 de la machine hôte
     ports:
       - "8081:8081"
     networks:
@@ -58,8 +74,10 @@ services:
     restart: unless-stopped
 
   mail-dev:
+    # Service pour tester l'envoi/réception d'emails en développement
     container_name: microservice_mail_dev
     image: maildev/maildev
+    # 1080 : interface web, 1025 : port SMTP pour réception des mails
     ports:
       - "1080:1080"
       - "1025:1025"
@@ -69,9 +87,11 @@ services:
 
 networks:
   microservice_network:
+  # Réseau Docker pour permettre aux services de communiquer entre eux
     driver: bridge
 
 volumes:
+  # Volumes pour persister les données des bases et outils
   postgres:
   pgadmin:
   mongo:
