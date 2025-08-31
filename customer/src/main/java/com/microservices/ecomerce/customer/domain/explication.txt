@@ -1,0 +1,3 @@
+Dans la couche domaine, nous conservons le code qui intègre et implémente la logique métier . 
+Il s'agit du cœur de notre application. Cette couche doit être isolée de la partie application et de la partie infrastructure. 
+De plus, elle doit contenir des interfaces définissant l'API pour communiquer avec les parties externes, comme la base de données, avec lesquelles le domaine interagit

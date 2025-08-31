@@ -1,0 +1,2 @@
+Enfin, la couche infrastructure contient tout ce dont l'application a besoin pour fonctionner, comme la configuration de la base de données ou de Spring. 
+Elle implémente également les interfaces dépendantes de l'infrastructure de la couche domaine.

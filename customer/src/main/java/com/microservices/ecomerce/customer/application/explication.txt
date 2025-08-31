@@ -1,0 +1,2 @@
+La couche applicative permet à l'utilisateur ou à tout autre programme d'interagir avec l'application. 
+Cette zone doit contenir des éléments tels que les interfaces utilisateur, les contrôleurs RESTful.
