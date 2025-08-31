@@ -1,0 +1,77 @@
+services:
+  postgres:
+    container_name: microservice_postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: arnold
+      POSTGRES_PASSWORD: arnold_password
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - microservice_network
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: microservice_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: afotsofone@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: arnold_password
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - microservice_network
+    restart: unless-stopped
+# Dans PGAdmin tu vas utiliser comme hostname microservice_postgres car c'est le nom du service dans le fichier docker-compose.yml et ils sont dans le même réseau.
+
+  mongo:
+    container_name: microservice_mongo
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: arnold
+      MONGO_INITDB_ROOT_PASSWORD: arnold_password
+    volumes:
+      - mongo:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - microservice_network
+    restart: unless-stopped
+  
+  mongo-express:
+    container_name: microservice_mongo_express
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: arnold
+      ME_CONFIG_MONGODB_ADMINPASSWORD: arnold_password
+    ports:
+      - "8081:8081"
+    networks:
+      - microservice_network
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: microservice_mail_dev
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - microservice_network
+    restart: unless-stopped
+
+networks:
+  microservice_network:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+  mongo:

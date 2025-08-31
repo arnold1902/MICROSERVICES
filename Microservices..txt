@@ -1,0 +1,16 @@
+Microservices.
+
+Config server : C'est pour externaliser les configurations de chaque microservices. Il est aussi un microservice basé sur Spring boot 3 et spring cloud et il va contenir les configurations de tous les autres microservices.
+
+Eureka server ou discovery server : Il est comme un annuaire ou les microservices vont s'enregistrer et passer leurs informations pour qu'ils puissent etrre accessible via notre API Gateway
+
+Spring cloud gateway : qui est la passerelle principale par laquelle le client va communiquer avec nos microservices.
+
+Voici le flow normal : 
+
+	- Chaque microservice au demarrage va recuperer dabor ses configurations sur le config server externe
+	- Quand chaque microservices vont demarrer, ils vont s'enregistrer dans le server de discovery
+	- L'api gateway va se connecter sur le serveur eureka pour savoir comment acceder à tous les microservices.
+	- L'api gateway va definir des routes pour acceder à chaque microservices communiqué par le client.
+
+On commence un projet toujours par son infrastructure dans notre cas docker compose.
