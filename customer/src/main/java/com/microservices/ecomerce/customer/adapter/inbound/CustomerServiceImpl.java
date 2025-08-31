@@ -4,10 +4,10 @@ import com.microservices.ecomerce.customer.domain.ports.inbound.CustomerService;
 import com.microservices.ecomerce.customer.domain.ports.outbound.CustomerRepository;
 import com.microservices.ecomerce.customer.application.dto.CustomerDto;
 import com.microservices.ecomerce.customer.infrastructure.exceptions.NotFoundException;
+import com.microservices.ecomerce.customer.infrastructure.utils.DtoMergeUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Optional<CustomerDto> findById(String id) {
+    public CustomerDto findById(String id) {
         return customerRepository.findById(id);
     }
 
@@ -34,12 +34,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto update(String id, CustomerDto customerDto) {
-        Optional<CustomerDto> existing = customerRepository.findById(id);
-        if (existing.isEmpty()) {
+        CustomerDto existing = customerRepository.findById(id);
+        if (existing == null) {
             throw new NotFoundException("Customer not found with id: " + id);
         }
-        CustomerDto updated = customerDto;
-        return customerRepository.save(updated);
+        CustomerDto merged = DtoMergeUtil.mergeCustomer(existing, customerDto);
+        return customerRepository.save(merged);
     }
 
     public void deleteById(String id) {

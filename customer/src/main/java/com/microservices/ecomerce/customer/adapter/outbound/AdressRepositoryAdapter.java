@@ -9,7 +9,6 @@ import com.microservices.ecomerce.customer.infrastructure.exceptions.NotFoundExc
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class AdressRepositoryAdapter implements AdressRepository {
@@ -29,16 +28,21 @@ public class AdressRepositoryAdapter implements AdressRepository {
     }
 
     @Override
-    public Optional<AdressDto> findById(String id) {
+    public AdressDto findById(String id) {
         return mongoAdressRepository.findById(id)
-                .map(adressMapper::toDto);
+                .map(adressMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Adress not found with id: " + id));
     }
 
     @Override
     public List<AdressDto> findAll() {
-        return mongoAdressRepository.findAll().stream()
+        List<AdressDto> result = mongoAdressRepository.findAll().stream()
                 .map(adressMapper::toDto)
                 .toList();
+        if (result.isEmpty()) {
+            throw new NotFoundException("No adresses found.");
+        }
+        return result;
     }
 
     @Override

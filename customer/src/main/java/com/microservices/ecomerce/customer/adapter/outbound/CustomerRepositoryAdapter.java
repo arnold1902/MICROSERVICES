@@ -9,7 +9,6 @@ import com.microservices.ecomerce.customer.infrastructure.mappers.CustomerMapper
 import com.microservices.ecomerce.customer.infrastructure.persistence.MongoCustomerRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CustomerRepositoryAdapter implements CustomerRepository {
@@ -29,16 +28,21 @@ public class CustomerRepositoryAdapter implements CustomerRepository {
     }
 
     @Override
-    public Optional<CustomerDto> findById(String id) {
+    public CustomerDto findById(String id) {
         return mongoCustomerRepository.findById(id)
-                .map(customerMapper::toDto);
+                .map(customerMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Customer not found with id: " + id));
     }
 
     @Override
     public List<CustomerDto> findAll() {
-        return mongoCustomerRepository.findAll().stream()
+        List<CustomerDto> result = mongoCustomerRepository.findAll().stream()
                 .map(customerMapper::toDto)
                 .toList();
+        if (result.isEmpty()) {
+            throw new NotFoundException("No customers found.");
+        }
+        return result;
     }
 
     @Override

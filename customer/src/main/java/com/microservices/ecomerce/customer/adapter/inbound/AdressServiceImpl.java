@@ -1,12 +1,13 @@
 package com.microservices.ecomerce.customer.adapter.inbound;
 
+import com.microservices.ecomerce.customer.infrastructure.exceptions.NotFoundException;
 import com.microservices.ecomerce.customer.domain.ports.inbound.AdressService;
 import com.microservices.ecomerce.customer.domain.ports.outbound.AdressRepository;
 import com.microservices.ecomerce.customer.application.dto.AdressDto;
+import com.microservices.ecomerce.customer.infrastructure.utils.DtoMergeUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AdressServiceImpl implements AdressService {
@@ -22,7 +23,7 @@ public class AdressServiceImpl implements AdressService {
     }
 
     @Override
-    public Optional<AdressDto> findById(String id) {
+    public AdressDto findById(String id) {
         return adressRepository.findById(id);
     }
 
@@ -33,12 +34,12 @@ public class AdressServiceImpl implements AdressService {
 
     @Override
     public AdressDto update(String id, AdressDto adressDto) {
-        Optional<AdressDto> existing = adressRepository.findById(id);
-        if (existing.isEmpty()) {
-            throw new com.microservices.ecomerce.customer.infrastructure.exceptions.NotFoundException("Adress not found with id: " + id);
+        AdressDto existing = adressRepository.findById(id);
+        if (existing == null) {
+            throw new NotFoundException("Adress not found with id: " + id);
         }
-        AdressDto updated = adressDto;
-        return adressRepository.save(updated);
+        AdressDto merged = DtoMergeUtil.mergeAdress(existing, adressDto);
+        return adressRepository.save(merged);
     }
 
     public void deleteById(String id) {
