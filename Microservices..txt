@@ -23,4 +23,12 @@ Pour le config server:
 	- Definir le profil actif de l'application sinon problème
 
 POur le discovery service:
-
+	- Il faut ajouter deux dependances le config client : c'est celui qui a besoin de recuperer les configurations et demande à se faire connecter au config server et recuperer les configurations
+	- Eureka server: Il est utilise lors qu'on souhaite créer ou considerer l'application spring comme discovery server
+	- Mettre l'annotation @EnableEurekaServer
+	- Il faut preciser dans l'applciation properties où il va recuperer ses configurations
+	- Il faut preciser qu'il ne doit pas s'enregistre au pres de lui meme donc mettre registerWithEureka: false
+	- Il faut preciser qu'il ne va pas communiquer ou acceder à d'autres microservices donc on met fetchRegistry: false
+	- Il faut preciser son URL de service pour donc on met : 
+			serviceUrl:
+			defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
