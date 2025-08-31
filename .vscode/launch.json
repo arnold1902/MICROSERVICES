@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CustomerApplication",
+            "request": "launch",
+            "mainClass": "com.microservices.ecomerce.customer.CustomerApplication",
+            "projectName": "customer"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-ConfigServerApplication<config-server>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
