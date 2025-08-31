@@ -62,11 +62,12 @@ services:
     image: mongo-express
     # Configuration pour se connecter au service MongoDB
     environment:
+      # Connexion à Mongo
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_ADMINUSERNAME: arnold
       ME_CONFIG_MONGODB_ADMINPASSWORD: arnold_password
-    # Mapping du port 8081 du conteneur vers le port 8081 de la machine hôte
+      # Mapping du port 8081 du conteneur vers le port 8081 de la machine hôte
     ports:
       - "8081:8081"
     networks:

@@ -14,3 +14,5 @@ Voici le flow normal :
 	- L'api gateway va definir des routes pour acceder à chaque microservices communiqué par le client.
 
 On commence un projet toujours par son infrastructure dans notre cas docker compose.
+
+Les microservices par lesquelles ont commence sont le config server et le discrovery service
