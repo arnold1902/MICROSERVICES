@@ -11,7 +11,6 @@ import com.microservices.ecommerce.product.infrastructure.mappers.CategoryMapper
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +23,7 @@ public class CategoryRepositoryAdapter implements CategoryRepository {
 	public List<CategoryDto> findAll() {
 		return jpaCategoryRepository.findAll().stream()
 				.map(categoryMapper::toDto)
-				.collect(Collectors.toList());
+				.toList();
 	}
 
 	@Override
