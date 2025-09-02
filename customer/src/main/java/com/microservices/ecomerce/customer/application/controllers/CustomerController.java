@@ -2,22 +2,24 @@ package com.microservices.ecomerce.customer.application.controllers;
 
 import com.microservices.ecomerce.customer.domain.ports.inbound.CustomerService;
 import com.microservices.ecomerce.customer.application.dto.CustomerDto;
+import com.microservices.ecomerce.customer.application.dto.ProductDto;
+
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/customers")
 public class CustomerController {
 	private final CustomerService customerService;
-
-	public CustomerController(CustomerService customerService) {
-		this.customerService = customerService;
-	}
+	private final RestTemplate restTemplate;
 
 	@PostMapping
 	public ResponseEntity<CustomerDto> create(@Valid @RequestBody CustomerDto customerDto) {
@@ -43,5 +45,11 @@ public class CustomerController {
 	public ResponseEntity<Void> delete(@PathVariable String id) {
 		customerService.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/product/{id}")
+	public ResponseEntity<ProductDto> getProduct(@PathVariable String id) {
+		ProductDto productDto = restTemplate.getForObject("http://localhost:8222/api/products/" + id, ProductDto.class);
+		return ResponseEntity.ok(productDto);
 	}
 }
