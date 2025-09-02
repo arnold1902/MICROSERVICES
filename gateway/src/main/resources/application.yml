@@ -1,22 +1,5 @@
 spring:
     config:
         import: optional:configserver:http://localhost:8888
-    cloud:
-        gateway:
-            discovery:
-                locator:
-                    enabled: true
-            routes:
-                - id: customer
-                  uri: lb://CUSTOMER-SERVICE
-                  predicates:
-                      - Path=/api/customers/**
-                - id: product
-                  uri: lb://PRODUCT-SERVICE
-                  predicates:
-                      - Path=/api/products/**
     application:
         name: gateway
-
-server:
-    port: 8080

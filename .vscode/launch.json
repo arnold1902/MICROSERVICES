@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GatewayApplication",
+            "request": "launch",
+            "mainClass": "com.microservices.gateway.GatewayApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "CustomerApplication",
             "request": "launch",
             "mainClass": "com.microservices.ecomerce.customer.CustomerApplication",
