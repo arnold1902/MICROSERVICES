@@ -4,6 +4,7 @@ spring:
             discovery:
                 locator:
                     enabled: true
+                    lowerCaseServiceId: true
             routes:
                 - id: customers
                   uri: lb://CUSTOMER
