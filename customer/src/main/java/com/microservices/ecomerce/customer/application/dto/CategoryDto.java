@@ -4,5 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public record CategoryDto(
     Long id,
-    @NotBlank String name
+    
+    @NotBlank(message = "Le nom de la catégorie ne doit pas être vide") 
+    String name
 ) {}

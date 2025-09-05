@@ -8,7 +8,13 @@ import jakarta.validation.constraints.Positive;
 
 public record ProductDto(
     Long id,
-    @NotBlank String name,
-    @NotNull @Positive BigDecimal price,
-    @NotNull CategoryDto category
+    @NotBlank(message = "Le nom du produit ne doit pas être vide") 
+    String name,
+
+    @NotNull(message = "Le prix ne doit pas être nul")
+    @Positive(message = "Le prix doit être positif")
+    BigDecimal price,
+
+    @NotNull(message = "La catégorie ne doit pas être nulle")
+    CategoryDto category
 ) {}
