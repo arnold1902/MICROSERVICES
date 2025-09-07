@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>24</java.version>
 		<spring-cloud.version>2025.0.0</spring-cloud.version>
 	</properties>
 	<dependencies>
@@ -53,7 +53,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -66,11 +65,18 @@
 				<version>3.4.6</version>
 				<configuration>
 					<from>
-					<image>eclipse-temurin:24-jdk</image>
+						<image>eclipse-temurin:24.0.2_12-jdk-noble</image>
 					</from>
 					<to>
-						<image>docker.io/arnold1902/microservices-test:config-server</image>
+						<image>docker.io/arnold1902/config-server:0.0.1-SNAPSHOT</image>
 					</to>
+            		<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+					<container>
+						<mainClass>com.microservices.config_server.ConfigServerApplication</mainClass>
+						<ports>
+							<port>8888</port>
+						</ports>
+					</container>
 				</configuration>
 			</plugin>
 		</plugins>

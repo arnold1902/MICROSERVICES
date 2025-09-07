@@ -86,6 +86,98 @@ services:
       - microservice_network
     restart: unless-stopped
 
+  config-server:
+    # Service de configuration centralisée (Spring Cloud Config Server)
+    container_name: microservice_config_server
+    image: docker.io/arnold1902/config-server:0.0.1-SNAPSHOT
+    ports:
+      - "8888:8888"
+    networks:
+      - microservice_network
+    restart: unless-stopped
+  
+  discovery-service:
+    # Service de configuration centralisée (Spring Cloud Discovery Service)
+    container_name: microservice_discovery_service
+    image: docker.io/arnold1902/discovery-service:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    networks:
+      - microservice_network
+    restart: unless-stopped
+  
+  product:
+    # Service de gestion des produits
+    container_name: microservice_product_service
+    image: docker.io/arnold1902/product:0.0.1-SNAPSHOT
+    ports:
+      - "8050:8050"
+    depends_on:
+      - config-server
+      - discovery-service
+      - postgres
+    networks:
+      - microservice_network
+    restart: unless-stopped
+  
+  customer:
+    # Service de gestion des clients
+    container_name: microservice_customer_service
+    image: docker.io/arnold1902/customer:0.0.1-SNAPSHOT
+    ports:
+      - "8090:8090"
+    depends_on:
+      - config-server
+      - discovery-service
+      - mongo
+    networks:
+      - microservice_network
+    restart: unless-stopped
+
+  gateway:
+    # Service de passerelle (API Gateway)
+    container_name: microservice_gateway_service
+    image: docker.io/arnold1902/gateway:0.0.1-SNAPSHOT
+    ports:
+      - "8222:8222"
+    depends_on:
+      - config-server
+      - discovery-service
+      - product
+      - customer
+    networks:
+      - microservice_network
+    restart: unless-stopped
+
+  prometheus:
+    # Service de monitoring Prometheus
+    container_name: microservice_prometheus
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - microservice_network
+    restart: unless-stopped
+
+  grafana:
+    # Service de visualisation Grafana
+    container_name: microservice_grafana
+    image: grafana/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin_password
+    ports:
+      - "3000:3000"
+    links:
+      - prometheus:prometheus
+    networks:
+      - microservice_network
+    restart: unless-stopped
+
 networks:
   microservice_network:
   # Réseau Docker pour permettre aux services de communiquer entre eux

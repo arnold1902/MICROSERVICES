@@ -129,6 +129,26 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.4.6</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:24.0.2_12-jdk-noble</image>
+					</from>
+					<to>
+						<image>docker.io/arnold1902/product:0.0.1-SNAPSHOT</image>
+					</to>
+            		<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+					<container>
+						<mainClass>com.microservices.ecommerce.product.ProductApplication</mainClass>
+						<ports>
+							<port>8050</port>
+						</ports>
+					</container>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

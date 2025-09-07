@@ -74,6 +74,26 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.4.6</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:24.0.2_12-jdk-noble</image>
+					</from>
+					<to>
+						<image>docker.io/arnold1902/discovery-service:0.0.1-SNAPSHOT</image>
+					</to>
+            		<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+					<container>
+						<mainClass>com.microservices.discovery_service.DiscoveryServiceApplication</mainClass>
+						<ports>
+							<port>8761</port>
+						</ports>
+					</container>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
