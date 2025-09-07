@@ -1,0 +1,41 @@
+global:
+  scrape_interval: "10s"
+  evaluation_interval: "10s"
+  # scrape_timeout: "10s"
+  # body_size_limit: "0"
+  # sample_limit: 0
+  # label_limit: 0
+  # label_name_length_limit: 0
+  # label_value_length_limit: 0
+  # target_limit: 0
+
+scrape_configs:
+  - job_name: "product_service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["product:8050"]
+        labels:
+          application: "Product Service Application"
+    # honor_labels: false
+    # honor_timestamps: true
+    # scheme: http
+    # follow_redirects: true
+    # body_size_limit: "0"
+    # sample_limit: 0
+    # label_limit: 0
+    # label_name_length_limit: 0
+    # label_value_length_limit: 0
+    # target_limit: 0
+  - job_name: "customer_service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["customer:8090"]
+        labels:
+          application: "Customer Service Application"
+  
+  - job_name: "gateway_service"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets: ["gateway:8222"]
+        labels:
+          application: "Gateway Service Application"

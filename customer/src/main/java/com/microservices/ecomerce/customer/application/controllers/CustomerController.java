@@ -57,7 +57,7 @@ public class CustomerController {
 	// @Retry(name = CBNAME, fallbackMethod = "fallBackGetProduct")
 	@RateLimiter(name = CBNAME, fallbackMethod = "fallBackGetProduct")
 	public ResponseEntity<ProductDto> getProduct(@PathVariable String id) {
-		ProductDto productDto = restTemplate.getForObject("http://localhost:8222/api/products/" + id, ProductDto.class);
+		ProductDto productDto = restTemplate.getForObject("http://gateway:8222/api/products/" + id, ProductDto.class);
 		return ResponseEntity.ok(productDto);
 	}
 

@@ -4,7 +4,7 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: mongo
       port: 27017
       database: customer-db
       username: arnold
@@ -16,13 +16,6 @@ management:
   health:
     circuitbreakers:
       enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: health
-  endpoint:
-    health:
-      show-details: always
 
 resilience4j:
   circuitbreaker:

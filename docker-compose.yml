@@ -9,6 +9,7 @@ services:
     environment:
       POSTGRES_USER: arnold
       POSTGRES_PASSWORD: arnold_password
+      POSTGRES_DB: product
       PGDATA: /var/lib/postgresql/data
     # Volume pour persister les données même si le conteneur est supprimé
     volumes:
@@ -156,11 +157,15 @@ services:
     container_name: microservice_prometheus
     image: prom/prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
     networks:
       - microservice_network
+    depends_on:
+      - gateway
+      - product
+      - customer
     restart: unless-stopped
 
   grafana:
