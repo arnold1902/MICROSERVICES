@@ -1,0 +1,57 @@
+{
+  "id": null,
+  "title": "Loki Logs Dashboard",
+  "tags": ["loki", "logs"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "10s",
+  "panels": [
+    {
+      "type": "logs",
+      "title": "Live Logs",
+      "gridPos": { "h": 12, "w": 24, "x": 0, "y": 0 },
+      "id": 1,
+      "datasource": { "type": "loki", "uid": "loki_ds" },
+      "options": {
+        "showLabels": true,
+        "showTime": true,
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"docker\"}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Log Volume Over Time",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 12 },
+      "id": 2,
+      "datasource": { "type": "loki", "uid": "loki_ds" },
+      "targets": [
+        {
+          "refId": "B",
+          "expr": "count_over_time({job=\"docker\"}[1m])"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 40,
+            "showPoints": "never"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "showLegend": true },
+        "tooltip": { "mode": "multi" }
+      }
+    }
+  ]
+}
